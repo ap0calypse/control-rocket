@@ -1,0 +1,78 @@
+#!/usr/bin/perl
+
+# name:     control-rocket
+# author:   ap0calypse (ap0calypse@agitatio.org)
+# purpose:  control the dream cheeky rocketbaby missile launcher
+
+
+use strict;
+use warnings;
+use Device::USB::MissileLauncher::RocketBaby;
+use Time::HiRes qw(usleep);
+
+
+my $rb = Device::USB::MissileLauncher::RocketBaby->new();
+
+if (scalar(@ARGV) == 1) {
+    my $decision = $ARGV[0];
+    if ($decision eq "fire") {
+        if ($rb->cando('fire')) {
+            $rb->do('stop');
+            $rb->do('fire');
+            usleep(5_000_000);
+            $rb->do('stop');
+        }
+    }
+    elsif ($decision eq "load") {
+        if ($rb->cando('fire')) {
+            $rb->do('stop');
+            $rb->do('fire');
+            usleep(4_000_000);
+            $rb->do('stop');
+        }
+    }
+    elsif ($decision eq "fastfire") {
+        if ($rb->cando('fire')) {
+            $rb->do('stop');
+            $rb->do('fire');
+            usleep(1_000_000);
+            $rb->do('stop');
+        }
+    }
+    elsif ($decision eq "right") {
+        if ($rb->cando('right')) {
+            $rb->do('stop');
+            $rb->do('right');
+            usleep(250_000);
+            $rb->do('stop');
+        }
+    }
+    elsif ($decision eq "left") {
+        if ($rb->cando('left')) {
+            $rb->do('stop');
+            $rb->do('left');
+            usleep(250_000);
+            $rb->do('stop');
+        }
+    }
+    elsif ($decision eq "down") {
+        if ($rb->cando('up')) {
+            $rb->do('stop');
+            $rb->do('up');
+            usleep(250_000);
+            $rb->do('stop');
+        }
+    }
+    elsif ($decision eq "up") {
+        if ($rb->cando('down')) {
+            $rb->do('stop');
+            $rb->do('down');
+            usleep(250_000);
+            $rb->do('stop');
+        }
+    }
+}
+else {
+    print "wrong param count\n";
+    exit 1;
+}
